@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ma galerie de photos interactive</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 0; background: #f2efe9; color: #1d2a2f; }
+    header, main { max-width: 960px; margin: 0 auto; padding: 1rem 1.5rem; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.25rem; }
+    #titre-photo { min-height: 2.5rem; font-size: 1.25rem; margin: 0 0 1rem; }
+    .galerie { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+    figure { margin: 0; background: #fff; border: 3px solid transparent; padding: .5rem; }
+    figure img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    figcaption { padding: .5rem 0 0; }
+    /* Même style au survol souris et au focus clavier */
+    figure.actif { border-color: #1f5f6b; background: #e3f0f2; }
+    figure:focus { outline: 3px solid #1f5f6b; outline-offset: 2px; }
+  </style>
+</head>
+<body onload="ajouterTabindex()">
+  <header>
+    <h1>Ma galerie de photos</h1>
+    <p>Survolez une photo avec la souris ou naviguez avec la touche Tab.</p>
+  </header>
+
+  <main>
+    <h2 id="titre-photo" aria-live="polite">Aucune photo sélectionnée</h2>
+
+    <div class="galerie">
+      <!-- Remplacez les fichiers images/photoN.jpg par vos six images et adaptez les alt -->
+      <figure onmouseover="afficher(this)" onmouseleave="reinitialiser(this)" onfocus="afficher(this)" onblur="reinitialiser(this)">
+        <img src="images Plage de sable blanc au lever du soleil, avec des vagues calmes.jpg" alt="Plage de sable blanc au lever du soleil, avec des vagues calmes">
+        <figcaption>Plage au lever du soleil</figcaption>
+      </figure>
+
+      <figure onmouseover="afficher(this)" onmouseleave="reinitialiser(this)" onfocus="afficher(this)" onblur="reinitialiser(this)">
+        <img src="Sentier de montagne bordé de sapins sous un ciel bleu.jpg" alt="Sentier de montagne bordé de sapins sous un ciel bleu">
+        <figcaption>Sentier de montagne</figcaption>
+      </figure>
+
+      <figure onmouseover="afficher(this)" onmouseleave="reinitialiser(this)" onfocus="afficher(this)" onblur="reinitialiser(this)">
+        <img src="Rue pavée d'une vieille ville avec des façades colorées.jpg" alt="Rue pavée d'une vieille ville avec des façades colorées">
+        <figcaption>Rue de la vieille ville</figcaption>
+      </figure>
+
+      <figure onmouseover="afficher(this)" onmouseleave="reinitialiser(this)" onfocus="afficher(this)" onblur="reinitialiser(this)">
+        <img src="Chat roux endormi sur le rebord d'une fenêtre ensoleillée.webp" alt="Chat roux endormi sur le rebord d'une fenêtre ensoleillée">
+        <figcaption>Chat endormi</figcaption>
+      </figure>
+
+      <figure onmouseover="afficher(this)" onmouseleave="reinitialiser(this)" onfocus="afficher(this)" onblur="reinitialiser(this)">
+        <img src="Champ de lavande violette s'étendant jusqu'à l'horizon.webp" alt="Champ de lavande violette s'étendant jusqu'à l'horizon">
+        <figcaption>Champ de lavande</figcaption>
+      </figure>
+
+      <figure onmouseover="afficher(this)" onmouseleave="reinitialiser(this)" onfocus="afficher(this)" onblur="reinitialiser(this)">
+        <img src="Pont illuminé reflété dans l'eau d'une rivière la nuit.avif" alt="Pont illuminé reflété dans l'eau d'une rivière la nuit">
+        <figcaption>Pont de nuit</figcaption>
+      </figure>
+    </div>
+  </main>
+
+  <script>
+    // Survol souris (onmouseover) ou focus clavier (onfocus)
+    function afficher(figure) {
+      figure.classList.add("actif");
+      var legende = figure.querySelector("figcaption").textContent;
+      document.getElementById("titre-photo").textContent = legende;
+    }
+
+    // Sortie souris (onmouseleave) ou perte de focus (onblur)
+    function reinitialiser(figure) {
+      figure.classList.remove("actif");
+      document.getElementById("titre-photo").textContent = "Aucune photo sélectionnée";
+    }
+
+    // Appelée au chargement de la page (onload) : rend chaque figure atteignable au clavier
+    function ajouterTabindex() {
+      console.log("onload déclenché : ajout des attributs tabindex");
+      var figures = document.getElementsByTagName("figure");
+      for (var i = 0; i < figures.length; i++) {
+        figures[i].setAttribute("tabindex", "0");
+      }
+    }
+  </script>
+</body>
+</html>
